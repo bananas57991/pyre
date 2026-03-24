@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Lookup Tool</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding-top: 50px; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h1 { font-size: 1.5rem; color: #1a1a1a; margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ddd; border-radius: 6px; font-size: 1rem; box-sizing: border-box; transition: border-color 0.3s; }
+        input:focus { border-color: #007bff; outline: none; }
+        button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; }
+        button:hover { background: #0056b3; }
+        #result { margin-top: 25px; text-align: left; padding: 15px; border-radius: 6px; background: #f8f9fa; display: none; }
+        .error { color: #dc3545; font-weight: bold; margin-top: 20px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Inventory Lookup</h1>
+    <input type="number" id="idInput" placeholder="Enter ID Number (e.g. 101)">
+    <button onclick="lookupData()">Search Database</button>
+
+    <div id="result"></div>
+    <div id="error" class="error">ID not found. Please try again.</div>
+</div>
+
+<script>
+    async function lookupData() {
+        const input = document.getElementById('idInput').value;
+        const resultDiv = document.getElementById('result');
+        const errorDiv = document.getElementById('error');
+
+        // Reset display
+        resultDiv.style.display = 'none';
+        errorDiv.style.display = 'none';
+
+        try {
+            // 1. Fetch the JSON file
+            const response = await fetch('data.json');
+            if (!response.ok) throw new Error("Could not load data file.");
+            
+            const database = await response.json();
+
+            // 2. Find the specific number
+            const entry = database[input];
+
+            if (entry) {
+                // 3. Display the information
+                resultDiv.innerHTML = `
+                    <p style="margin:0; font-size: 0.8rem; color: #666;">ID: #${input}</p>
+                    <h2 style="margin: 5px 0; color: #007bff;">${entry.name}</h2>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+                    <p><strong>Status:</strong> ${entry.status}</p>
+                    <p><strong>Location:</strong> ${entry.location}</p>
+                `;
+                resultDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'block';
+            }
+        } catch (err) {
+            console.error(err);
+            errorDiv.innerText = "Error: Make sure you are using a local server (like Live Server).";
+            errorDiv.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
