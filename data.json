@@ -1,0 +1,17 @@
+{
+  "101": {
+    "name": "Industrial Widget",
+    "status": "In Stock",
+    "location": "Warehouse A"
+  },
+  "102": {
+    "name": "Electronic Sensor",
+    "status": "Out of Stock",
+    "location": "Warehouse B"
+  },
+  "103": {
+    "name": "Hydraulic Pump",
+    "status": "In Stock",
+    "location": "Warehouse C"
+  }
+}
