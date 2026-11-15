@@ -3,6 +3,15 @@ import os
 import glob
 import email
 import urllib.request
+class ForceHttpRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        # If the server tries to redirect to https://, force it back to http://
+        if newurl.startswith("https://"):
+            newurl = "http://" + newurl[8:]
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+
 from email import policy
 from email.message import EmailMessage
 from email.utils import formatdate, make_msgid
