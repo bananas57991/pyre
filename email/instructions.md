@@ -9,7 +9,7 @@ Why a Native Python Desktop Window Works Best Here
 Step 1: Save the Standalone Desktop Email Client (~/mail_viewer.py)
 
 Create a file named mail_viewer.py in your home folder (nano ~/mail_viewer.py) and paste this complete desktop app:
-python
+'''python
 #!/usr/bin/env python3
 import os
 import glob
@@ -179,6 +179,8 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = LocalMailApp(root)
     root.mainloop()
+
+'''    
 Use code with caution.
 
 Step 2: Make It Executable & Run It
@@ -196,6 +198,9 @@ Use code with caution.
 What You Get
 
 • Outlook / cPanel Style Split View: Left column lists From, Subject, and Date for every .eml file in /var/www/my-site-name/inbox/; clicking any row opens the full formatted email on the right.
+
 • Zero Login & Zero Online Presence: Opens as a native window directly on your screen with no browser, no PHP session, and no web logs.
+
 • Built-In Compose & Reply Window: Clicking Reply pre-fills the sender's custom address (JS455@RRLYpP9Qpw9iRTq5ThFfwOuY.ftest, etc.) and Re: Subject, ready to hand off to your existing sending logic inside send_now().
+
 If you'd like to wire up the Send via Router button inside send_now(), let me know what language or command your sending/routing logic uses (e.g., a Python script, PHP CLI script, or bash command) and I'll drop the exact 2-line hook right into send_now().
